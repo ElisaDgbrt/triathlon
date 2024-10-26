@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Les courses clubs : </h2>
+    <h1>{% block title %} Courses {% endblock %}</h1>
+    <h2>Les courses clubs : </h2>
+
     <ul>
         {% if favorite_races %}
             {% for race in favorite_races %}
@@ -9,14 +11,72 @@
         {% else %}
             <li>Aucune course club pour le moment...</li>
         {% endif %}
-</ul>
-    <h1>{% block title %} Courses {% endblock %}</h1>
-    {% for race in races %}
-        <a href="{{ url_for('main.course', race_id=race['id']) }}">
-            <h2>{{ race['name'] }}</h2>
-        </a>
-        <span class="badge badge-primary">{{ race['date'] }}</span>
-        <hr>
-    {% endfor %}
+    </ul>
+    <style>
+        .card {
+            height: 96px;
+        }
+
+        .card > .card-content{
+            display: grid;
+            grid-template-columns: 5% 40% 40% 15%;
+        }
+        .race-info {
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+        }
+        .card .is-favorite button {
+            height: 96px;
+        }
+
+
+    </style>
+    <div class="cards">
+        {% for race in races %}
+            <div class="card">
+                <div class="card-content level p-0">
+                    <div class="level-item is-narrow is-favorite">
+                        <button class="button is-medium is-white">
+                            <span class="icon has-text-primary"><i class="fa-solid fa-star"></i></span>
+                        </button>
+                    </div>
+                    <div class="level-item py-3 is-flex is-flex-direction-column is-align-items-start">
+                        <p class="mb-1">
+                            <span class="title is-4">{{ race['name'] }}</span>
+                            <span class="tag is-primary is-light">Course club</span>
+                        </p>
+                        <span>
+                        <i class="fas fa-users"></i>
+                        <span> 0 participants</span>
+                     </span>
+                    </div>
+                    <div class="level-item level p-3 is-align-items-start race-info mb-0">
+                     <span class="level-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="px-1">{{ race['date'] }}</span>
+                        </span>
+                        <span class="level-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="px-1">{{ race['place'] }}</span>
+                        </span>
+                        <span class="level-item">
+                            <i class="fas fa-route "></i>
+                            <span class="px-1">{{ race['distance'] }}</span>
+                        </span>
+                    </div>
+                    <div class="level-item is-narrow is-flex is-flex-direction-column">
+                        <button class="button is-light is-success is-fullwidth py-3">
+                            <span class="icon"><i class="fas fa-check"></i></span>
+                            <span> Je participe</span>
+                        </button>
+                        <button class="button is-light is-danger is-fullwidth py-3">
+                            <span class="icon"><i class="fas fa-xmark"></i></span>
+                            <span> Je ne participe pas</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %} 
  

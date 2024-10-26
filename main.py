@@ -111,21 +111,23 @@ def courses():
     conn = get_db_connection()
     
     # Fetch all races
-    races = conn.execute('SELECT * FROM courses').fetchall()
-    
-    # Get the club of the current user
-    cursor = conn.execute("SELECT club FROM users WHERE email = ?", (session["email"],))
-    user_club = cursor.fetchone()
+    races = conn.execute('SELECT * FROM courses order by courses.date').fetchall()
 
-    if user_club:
-        user_club = user_club['club']
-        # Fetch favorite races for the user's club only
-        favorite_races = conn.execute('''
-            SELECT c.id, c.name, c.date, c.distance
-            FROM club_favorites cf
-            JOIN courses c ON cf.course_id = c.id
-            WHERE cf.club_id = ?
-        ''', (user_club,)).fetchall()
+
+    if session:
+        # Get the club of the current user
+        cursor = conn.execute("SELECT club FROM users WHERE email = ?", (session["email"],))
+        user_club = cursor.fetchone()
+
+        if user_club:
+            user_club = user_club['club']
+            # Fetch favorite races for the user's club only
+            favorite_races = conn.execute('''
+                SELECT c.id, c.name, c.date, c.distance
+                FROM club_favorites cf
+                JOIN courses c ON cf.course_id = c.id
+                WHERE cf.club_id = ?
+            ''', (user_club,)).fetchall()
     else:
         favorite_races = []  # No favorites if no club found
 
@@ -229,3 +231,6 @@ def mark_favorite(id):
     conn.close()
     return redirect(url_for('main.courses', id=id))
 
+@main.route('/entrainements')
+def entrainements():
+    return render_template('trainings.html')

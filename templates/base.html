@@ -1,58 +1,71 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Flask Auth Example</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='base.css') }}">
 </head>
 
 <body>
-    <section class="hero is-primary is-fullheight">
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="{{ url_for('main.index') }}">
+            <img src="{{ url_for('static',filename='logo.png') }}" alt="Sync sport Association logo">
+        </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="appNavbar">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
 
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a href="{{ url_for('main.index') }}" class="navbar-item">
-                                Home
-                            </a>
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.profile') }}" class="navbar-item">
-                                Profile
-                            </a>
-                            {% endif %}
-                            {% if not current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.login_post') }}" class="navbar-item">
-                                Login
-                            </a>
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                Sign Up
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.communications') }}" class="navbar-item">
-                                Communications
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('main.courses') }}" class="navbar-item">
-                                Courses
-                            </a>
-                            {% endif %}
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                Logout
-                            </a>
-                            {% endif %}
-                            </a>
-                        </div>
-                    </div>
+    <div id="appNavbar" class="navbar-menu has-text-weight-semibold is-uppercase">
+        <div class="navbar-start">
+            <a href="{{ url_for('main.entrainements') }}" class="navbar-item">
+                Entraînements
+            </a>
+            <a href="{{ url_for('main.courses') }}" class="navbar-item">
+                Courses
+            </a>
+            <a href="{{ url_for('main.communications') }}" class="navbar-item">
+                Communications
+            </a>
+            <a href="{{ url_for('main.index') }}" class="navbar-item">
+                Athlète
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.login_post') }}" class="button is-light">
+                            Log in
+                        </a>
+                        <a href="{{ url_for('auth.signup') }}" class="button is-dark">
+                            <strong>Sign up</strong>
+                        </a>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.profile') }}" class="button is-light">
+                            Profile
+                        </a>
+                        <a href="{{ url_for('auth.logout') }}" class="button is-dark">
+                            Logout
+                        </a>
+                    {% endif %}
                 </div>
-            </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+<div id="appContent" class="container content">
+    <section class="hero">
+        <div class="hero-head">
             <div class="container">
                 {% for message in get_flashed_messages() %}
                     <div class="alert alert-danger">{{ message }}</div>
@@ -65,6 +78,6 @@
             </div>
         </div>
     </section>
+</div>
 </body>
-
 </html>

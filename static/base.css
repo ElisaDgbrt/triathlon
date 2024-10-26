@@ -1,0 +1,44 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
+
+:root {
+    --bulma-primary-h: 48deg;
+    --bulma-primary-l: 67%;
+    --bulma-link-h: 209deg;
+    --bulma-link-s: 83%;
+    --bulma-link-l: 74%;
+    --bulma-info-h: 195deg;
+    --bulma-info-s: 83%;
+    --bulma-info-l: 38%;
+    --bulma-success-h: 164deg;
+    --bulma-success-s: 95%;
+    --bulma-success-l: 43%;
+    --bulma-warning-h: 14deg;
+    --bulma-warning-s: 90%;
+    --bulma-warning-l: 69%;
+    --bulma-danger-h: 346deg;
+    --bulma-danger-s: 84%;
+    --bulma-danger-l: 61%;
+
+
+    --bulma-navbar-height:72px;
+
+
+
+}
+/* palette https://coolors.co/palette/ef476f-f78c6b-ffd166-06d6a0-118ab2-073b4c */
+
+
+nav.navbar {
+    position: fixed;
+    width: 100%;
+    top:0;
+}
+
+nav.navbar .navbar-item img {
+    height: 72px;
+    max-height: 72px;
+}
+
+#appContent {
+    margin-top:96px;
+}
